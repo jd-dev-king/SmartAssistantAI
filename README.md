@@ -191,6 +191,16 @@ Future Improvements
 • Cloud synchronization
 • User authentication
 
+---
 Author
 Jeremiah Lupton
 Python Developer | Engineering Technology Portfolio Project
+---
+
+GitHub: https://github.com/jd-dev-king
+
+---
+
+## License
+
+MIT License
