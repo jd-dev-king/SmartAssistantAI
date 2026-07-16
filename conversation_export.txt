@@ -1,0 +1,80 @@
+You: hi
+
+Bot: Hello! How can I help?
+
+You: I could not understand.
+
+Bot: Try:
+• joke
+• weather Philadelphia
+• define engineer
+• wiki Nikola Tesla
+• cpu usage
+• battery status
+
+You: battery status
+
+Bot: CPU Usage: 14.1%
+RAM Usage: 86.3%
+Battery: 100%
+Charging: True
+
+You: calculate 10+5
+
+Bot: 10+5 = 15
+
+You: calculate 5*7
+
+Bot: 5*7 = 35
+
+You: solve 100 / 4
+
+Bot: 100 / 4 = 25.0
+
+You: 15 percent of 200
+
+Bot: 15.0% of 200.0 = 30.0
+
+You: find resume
+
+Bot: /Users/jeremiahlupton/eclipse/jee-2024-06/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.osgi/281/0/.cp/icons/full/dlcl16/resume_co@2x.png
+/Users/jeremiahlupton/eclipse/jee-2024-06/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.osgi/281/0/.cp/icons/full/dlcl16/resume_co.png
+/Users/jeremiahlupton/eclipse/jee-2024-06/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.osgi/281/0/.cp/icons/full/elcl16/resume_co@2x.png
+/Users/jeremiahlupton/eclipse/jee-2024-06/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.osgi/281/0/.cp/icons/full/elcl16/resume_co.png
+/Users/jeremiahlupton/.nvm/versions/node/v22.14.0/lib/node_modules/node-red/node_modules/oauth2orize/lib/middleware/resume.js
+
+You: open calculator
+
+Bot: Opening Calculator...
+
+You: open finder
+
+Bot: Opening Finder...
+
+You: my name is Jeremiah
+
+Bot: Nice to meet you Jeremiah! I will remember your name.
+
+You: what is today's date
+
+Bot: July 15, 2026
+
+You: what is my name
+
+Bot: Your name is Jeremiah.
+
+You: hey bot what is my name
+
+Bot: Your name is Jeremiah.
+
+You: hello
+
+Bot: Hello! How can I help?
+
+You: weather in nj
+
+Bot: In Nj: ☀️  +88°F
+
+
+You: export chat
+

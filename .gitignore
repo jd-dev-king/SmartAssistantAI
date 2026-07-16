@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+
+# Application data
+history.json
+profile.json
+
+# Logs
+*.log
+
+# User memory data
+memory/profile.json
+memory/history.json

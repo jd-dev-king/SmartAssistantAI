@@ -1,0 +1,6 @@
+requests
+wikipedia-api
+customtkinter
+SpeechRecognition
+pyaudio
+psutil
