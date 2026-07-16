@@ -58,6 +58,28 @@ wiki Python programming
 Displays system information and resource usage.
 
 ---
+# Current Status
+
+✅ Desktop GUI
+
+✅ Voice Responses
+
+✅ Persistent Memory
+
+✅ Calculator
+
+✅ Dictionary
+
+✅ Wikipedia
+
+✅ System Monitor
+
+✅ File Search
+
+✅ App Launcher
+
+🚧 Weather API (works but is currently being updated)
+---
 
 # Technologies Used
 
@@ -92,13 +114,50 @@ JSON Storage
    Voice Engine
 
 ---
+# Project Structure
+
+SmartAssistantAI/
+│
+├── api/
+├── assets/
+├── calculator/
+├── gui/
+├── memory/
+├── system/
+├── utilities/
+│
+├── chatbot.py
+├── main.py
+├── requirements.txt
+└── README.md
+---
+
+## 📸 Screenshots
+
+### Main Interface
+
+![Main Window](screenshots/main_window.png)
+
+### Memory System
+
+![Memory Demo](screenshots/memory_test.png)
+
+### Calculator
+
+![Calculator](screenshots/calculator_test.png)
+
+### System Monitor
+
+![System Monitor](screenshots/cpu_test.png)
+
+---
+
 
 # Installation
 
 Clone repository:
 
-```bash
-git clone https://github.com/YOUR_USERNAME/SmartAssistantAI.git
+</>bash git clone https://github.com/YOUR_USERNAME/SmartAssistantAI.git
 Navigate:
 </>Bash cd SmartAssistantAI  
 
