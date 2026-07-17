@@ -2,6 +2,12 @@
 
 A Python-based desktop AI assistant application built with a modern graphical interface, API integrations, persistent memory, voice synthesis, and native macOS deployment.
 
+## 🌐 Project Showcase
+
+View the interactive portfolio page:
+
+https://jd-dev-king.github.io/SmartAssistantAI/
+
 ## Overview
 
 Smart Assistant AI is a personal desktop assistant designed to demonstrate software engineering concepts including:
