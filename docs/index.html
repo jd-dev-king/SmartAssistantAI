@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Assistant AI Web Edition — local tools, voice, local AI, charts, file analysis, and analytics.">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Smart AI">
+  <title>Smart Assistant AI | Web Edition</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" href="./assets/smart-ai-logo.png">
+  <link rel="apple-touch-icon" href="./assets/smart-ai-logo.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside id="sidebar" class="sidebar">
+    <button id="collapseSidebarButton" class="sidebar-collapse-button" type="button" aria-label="Collapse sidebar">‹</button>
+
+    <div class="brand">
+      <img src="./assets/smart-ai-logo.png" alt="Smart Assistant AI logo" class="brand-logo">
+      <div><h1>Smart Assistant AI</h1><p>Web Edition • v2.2</p></div>
+    </div>
+
+    <section class="profile-card">
+      <span class="section-label">Current user</span>
+      <strong id="profileName">Guest</strong>
+      <span id="statusText" class="status">Ready</span>
+      <span id="connectionStatus" class="connection-status">Online</span>
+    </section>
+
+    <section class="conversation-section">
+      <div class="conversation-header">
+        <span class="section-label">Conversations</span>
+        <button id="newConversationButton" class="conversation-add-button" type="button" aria-label="New conversation">+</button>
+      </div>
+      <div id="conversationList" class="conversation-list"></div>
+    </section>
+
+    <section class="quick-actions">
+      <span class="section-label">Quick actions</span>
+      <button type="button" class="quick-command" data-command="What is the weather in Philadelphia, PA?">Check weather</button>
+      <button type="button" class="quick-command" data-command="define automation">Define automation</button>
+      <button type="button" class="quick-command" data-command="wiki Nikola Tesla">Search Wikipedia</button>
+      <button type="button" class="quick-command" data-command="calculate 125 * 8">Calculator demo</button>
+    </section>
+
+    <div class="sidebar-actions">
+      <button id="installAppButton" class="primary-button install-app-button" type="button" hidden>Install Web App</button>
+      <button id="settingsButton" class="secondary-button" type="button">Settings</button>
+      <button id="analyticsButton" class="secondary-button" type="button">Analytics</button>
+      <button id="aboutButton" class="secondary-button" type="button">About</button>
+      <button id="themeButton" class="secondary-button" type="button">Choose Theme</button>
+      <button id="exportButton" class="secondary-button" type="button">Export Chat</button>
+      <button id="clearButton" class="secondary-button" type="button">Clear History</button>
+      <button id="clearMemoryButton" class="danger-button" type="button">Clear Memory</button>
+    </div>
+
+    <p class="desktop-note">CPU monitoring, local file search, and native application launching remain available in the Desktop Edition.</p>
+  </aside>
+
+  <main class="chat-panel">
+    <header class="chat-header">
+      <button id="mobileMenuButton" class="mobile-menu-button" type="button" aria-label="Open sidebar">☰</button>
+
+      <div id="assistantAvatar" class="assistant-avatar idle" aria-label="Smart Assistant AI is ready">
+        <div class="avatar-ring">
+          <img src="./assets/smart-ai-logo.png" alt="" class="avatar-image">
+          <span class="avatar-status-dot"></span>
+        </div>
+      </div>
+
+      <div class="workspace-title">
+        <span class="eyebrow">Interactive portfolio application</span>
+        <h2>Assistant Workspace</h2>
+      </div>
+
+      <div class="history-search">
+        <label class="sr-only" for="historySearchInput">Search conversation</label>
+        <input id="historySearchInput" type="search" placeholder="Search conversation..." autocomplete="off">
+        <span id="searchResultCount" class="search-result-count">0 results</span>
+        <button id="previousResultButton" class="search-control-button" type="button" disabled aria-label="Previous result">↑</button>
+        <button id="nextResultButton" class="search-control-button" type="button" disabled aria-label="Next result">↓</button>
+        <button id="clearSearchButton" class="search-control-button" type="button" disabled aria-label="Clear search">×</button>
+      </div>
+
+      <div class="header-badges">
+        <span id="aiModeBadge" class="ai-mode-badge">Built-in Tools</span>
+        <span class="web-badge">Live Web App</span>
+      </div>
+    </header>
+
+    <section id="chatMessages" class="chat-messages" aria-live="polite" aria-label="Conversation"></section>
+    <div id="suggestionRow" class="suggestion-row" aria-label="Suggested commands"></div>
+
+    <footer class="composer">
+      <label class="sr-only" for="messageInput">Message</label>
+      <input id="messageInput" type="text" placeholder="Ask Smart Assistant AI something..." autocomplete="off">
+      <button id="uploadFileButton" class="icon-button" type="button" title="Upload CSV or JSON" aria-label="Upload CSV or JSON">📎</button>
+      <input id="fileInput" type="file" accept=".csv,.json,text/csv,application/json" hidden>
+      <button id="microphoneButton" class="icon-button" type="button" title="Speak a message" aria-label="Speak a message">🎤</button>
+      <button id="speakButton" class="icon-button" type="button" title="Read last response" aria-label="Read last response">🔊</button>
+      <button id="sendButton" class="primary-button" type="button">Send</button>
+    </footer>
+  </main>
+</div>
+
+<!-- SETTINGS -->
+<div id="settingsOverlay" class="settings-overlay" aria-hidden="true">
+  <section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <header class="settings-header">
+      <div><span class="eyebrow">Preferences</span><h2 id="settingsTitle">Assistant Settings</h2></div>
+      <button id="closeSettingsButton" class="settings-close-button" type="button" aria-label="Close settings">×</button>
+    </header>
+    <div class="settings-content">
+      <section class="settings-group">
+        <h3>Assistant mode</h3>
+        <div class="assistant-mode-options" role="radiogroup" aria-label="Assistant mode">
+          <label class="assistant-mode-card">
+            <input id="builtInModeRadio" type="radio" name="assistantMode" value="built-in">
+            <span class="assistant-mode-content"><strong>Built-in Tools</strong><small>Weather, calculator, dictionary, Wikipedia, memory, jokes, voice, files, and charts.</small><span class="mode-availability ready">Ready immediately</span></span>
+          </label>
+          <label class="assistant-mode-card">
+            <input id="localAiModeRadio" type="radio" name="assistantMode" value="local-ai">
+            <span class="assistant-mode-content"><strong>Local AI</strong><small>Runs an AI model privately inside this browser. Load the model before use.</small><span id="localAiAvailability" class="mode-availability">Model not loaded</span></span>
+          </label>
+          <label class="assistant-mode-card disabled-mode">
+            <input id="cloudAiModeRadio" type="radio" name="assistantMode" value="cloud-ai" disabled>
+            <span class="assistant-mode-content"><strong>Cloud AI</strong><small>Secure hosted AI requires a backend.</small><span class="mode-availability unavailable">Coming later</span></span>
+          </label>
+        </div>
+        <div class="ai-model-controls">
+          <button id="loadAiModelButton" class="primary-button" type="button">Load Local AI Model</button>
+          <button id="unloadAiModelButton" class="secondary-button" type="button" disabled>Unload Model</button>
+        </div>
+        <div id="aiModelStatus" class="ai-model-status" aria-live="polite">Built-in Tools are active.</div>
+        <div id="aiProgressContainer" class="ai-progress-container" hidden>
+          <div class="ai-progress-track"><div id="aiProgressBar" class="ai-progress-bar" style="width:0%"></div></div>
+          <span id="aiProgressText">Preparing model…</span>
+        </div>
+      </section>
+
+      <section class="settings-group">
+        <h3>Voice</h3>
+        <label class="setting-row"><span><strong>Automatic speech</strong><small>Read every assistant response aloud.</small></span><input id="autoSpeakToggle" type="checkbox"></label>
+      </section>
+
+      <section class="settings-group">
+        <h3>Response speed</h3>
+        <label for="responseSpeedSelect">Typing delay</label>
+        <select id="responseSpeedSelect"><option value="fast">Fast</option><option value="normal">Normal</option><option value="relaxed">Relaxed</option></select>
+      </section>
+
+      <section class="settings-group">
+        <h3>Appearance</h3>
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect">
+          <option value="dark">Dark Blue</option>
+          <option value="light">Light</option>
+          <option value="corporate">Corporate</option>
+          <option value="terminal">Terminal</option>
+          <option value="glass">Glass</option>
+          <option value="cyberpunk">Cyberpunk</option>
+          <option value="material">Material</option>
+          <option value="system">System Default</option>
+        </select>
+      </section>
+
+      <section class="settings-group"><h3>Saved profile</h3><div id="memorySummary" class="memory-summary"></div></section>
+
+      <section class="settings-group">
+        <h3>Data controls</h3>
+        <div class="settings-action-row">
+          <button id="settingsClearHistoryButton" class="secondary-button" type="button">Clear History</button>
+          <button id="settingsClearMemoryButton" class="danger-button" type="button">Clear Memory</button>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div id="aboutOverlay" class="settings-overlay" aria-hidden="true">
+  <section class="settings-panel about-panel" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <header class="settings-header"><div><span class="eyebrow">Product overview</span><h2 id="aboutTitle">Smart Assistant AI</h2></div><button id="closeAboutButton" class="settings-close-button" type="button" aria-label="Close about">×</button></header>
+    <div class="settings-content">
+      <section class="about-intro">
+        <img src="./assets/smart-ai-logo.png" alt="Smart Assistant AI logo" class="about-logo">
+        <div><h3>Web Edition v2.2</h3><p>A browser-based assistant with local tools, optional WebLLM, voice, PWA support, file analysis, charts, rich response cards, and private analytics.</p></div>
+      </section>
+      <section class="edition-grid">
+        <article class="edition-card"><span class="web-badge">Web Edition</span><h3>Runs in the browser</h3><ul><li>Persistent profile and chat sessions</li><li>Weather, dictionary, and Wikipedia cards</li><li>Speech input and output</li><li>CSV/JSON analysis and charts</li><li>Optional Local AI</li><li>Installable PWA</li></ul></article>
+        <article class="edition-card"><span class="desktop-badge">Desktop Edition</span><h3>Native macOS tools</h3><ul><li>CPU, RAM, and battery monitoring</li><li>Local file search</li><li>Native application launcher</li><li>Persistent JSON memory</li><li>Packaged macOS application</li></ul></article>
+      </section>
+      <section class="about-actions">
+        <a class="primary-link-button" href="https://github.com/jd-dev-king/SmartAssistantAI" target="_blank" rel="noopener noreferrer">View GitHub Repository</a>
+        <a class="secondary-link-button" href="https://github.com/jd-dev-king/SmartAssistantAI/releases" target="_blank" rel="noopener noreferrer">View Desktop Releases</a>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- FILE ANALYZER -->
+<div id="fileOverlay" class="settings-overlay" aria-hidden="true">
+  <section class="settings-panel file-analysis-panel" role="dialog" aria-modal="true" aria-labelledby="fileAnalysisTitle">
+    <header class="settings-header"><div><span class="eyebrow">Local data analysis</span><h2 id="fileAnalysisTitle">File Analyzer</h2></div><button id="closeFileOverlayButton" class="settings-close-button" type="button" aria-label="Close file analyzer">×</button></header>
+    <div class="settings-content">
+      <section id="fileDropZone" class="file-drop-zone" tabindex="0">
+        <div class="file-drop-icon">⇧</div><strong>Drop a CSV or JSON file here</strong><span>Files remain in your browser.</span><button id="selectFileButton" class="primary-button" type="button">Choose File</button>
+      </section>
+      <section id="fileWorkspace" class="file-workspace" hidden>
+        <div class="file-summary-header"><div><span class="section-label">Loaded file</span><h3 id="loadedFileName">No file loaded</h3></div><button id="removeFileButton" class="danger-button" type="button">Remove File</button></div>
+        <div id="fileStats" class="file-stats-grid"></div>
+        <section class="chart-controls">
+          <label>Chart type<select id="chartTypeSelect"><option value="bar">Bar</option><option value="line">Line</option><option value="pie">Pie</option><option value="scatter">Scatter</option></select></label>
+          <label id="labelColumnLabel">Label column<select id="labelColumnSelect"></select></label>
+          <label>Value column<select id="valueColumnSelect"></select></label>
+          <label id="secondaryValueLabel" hidden>Y-axis column<select id="secondaryValueSelect"></select></label>
+          <button id="generateChartButton" class="primary-button" type="button">Generate Chart</button>
+        </section>
+        <section id="chartContainer" class="chart-container" hidden>
+          <canvas id="dataChart"></canvas>
+          <div class="chart-action-row"><button id="downloadChartButton" class="secondary-button" type="button">Download Chart</button><button id="sendChartSummaryButton" class="secondary-button" type="button">Add Summary to Chat</button></div>
+        </section>
+        <section class="data-preview-section"><div class="data-preview-header"><h3>Data Preview</h3><span id="previewRowCount">0 rows</span></div><div class="data-table-wrapper"><table id="dataPreviewTable"><thead></thead><tbody></tbody></table></div></section>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- ANALYTICS -->
+<div id="analyticsOverlay" class="settings-overlay" aria-hidden="true">
+  <section class="settings-panel analytics-panel" role="dialog" aria-modal="true" aria-labelledby="analyticsTitle">
+    <header class="settings-header"><div><span class="eyebrow">Local usage insights</span><h2 id="analyticsTitle">Analytics Dashboard</h2></div><button id="closeAnalyticsButton" class="settings-close-button" type="button" aria-label="Close analytics">×</button></header>
+    <div class="settings-content">
+      <section class="analytics-intro"><div><h3>Private browser analytics</h3><p>Metrics stay in this browser and are not transmitted to a server.</p></div><button id="resetAnalyticsButton" class="danger-button" type="button">Reset Analytics</button></section>
+      <section id="analyticsMetricGrid" class="analytics-metric-grid"></section>
+      <section class="analytics-chart-grid">
+        <article class="analytics-chart-card"><header><span class="section-label">Activity trend</span><h3>Messages by Day</h3></header><div class="analytics-chart-wrapper"><canvas id="activityTrendChart"></canvas></div></article>
+        <article class="analytics-chart-card"><header><span class="section-label">Feature usage</span><h3>Most-Used Tools</h3></header><div class="analytics-chart-wrapper"><canvas id="toolUsageChart"></canvas></div></article>
+      </section>
+      <section class="analytics-detail-grid">
+        <article class="analytics-detail-card"><span class="section-label">Assistant</span><h3>Mode Usage</h3><div id="assistantModeAnalytics" class="analytics-list"></div></article>
+        <article class="analytics-detail-card"><span class="section-label">Appearance</span><h3>Theme Usage</h3><div id="themeAnalytics" class="analytics-list"></div></article>
+        <article class="analytics-detail-card"><span class="section-label">Data tools</span><h3>File and Chart Activity</h3><div id="fileAnalytics" class="analytics-list"></div></article>
+        <article class="analytics-detail-card"><span class="section-label">Voice</span><h3>Voice Activity</h3><div id="voiceAnalytics" class="analytics-list"></div></article>
+      </section>
+      <footer class="analytics-footer"><span id="analyticsLastUpdated">Analytics have not been recorded yet.</span><button id="exportAnalyticsButton" class="secondary-button" type="button">Export Analytics</button></footer>
+    </div>
+  </section>
+</div>
+
+<script type="module" src="./script.js"></script>
+</body>
+</html>

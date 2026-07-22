@@ -1,0 +1,19 @@
+{
+    "name": "Smart Assistant AI Web Edition",
+    "short_name": "Smart AI",
+    "description": "An interactive browser-based assistant with memory, utilities, voice, weather, and persistent conversations.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#0b1220",
+    "theme_color": "#0b1220",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "./assets/smart-ai-logo.png",
+            "sizes": "any",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
