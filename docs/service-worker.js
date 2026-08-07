@@ -1,13 +1,14 @@
 "use strict";
 
 const CACHE_NAME =
-    "smart-assistant-ai-v2-cache-7.1";
+    "smart-assistant-ai-v3-cache-1";
 
 const APP_FILES = [
     "./",
     "./index.html",
     "./style.css",
     "./script.js",
+    "./ees-config.js",
     "./manifest.webmanifest",
     "./assets/smart-ai-logo.png"
 ];
