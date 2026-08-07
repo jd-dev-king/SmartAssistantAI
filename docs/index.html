@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Smart Assistant AI Web Edition — local tools, voice, local AI, charts, file analysis, and analytics.">
+  <meta name="description" content="Smart Assistant AI v3.0.0 — standalone tools, voice, local AI, file analysis, analytics, and optional EES Universe intelligence.">
   <meta name="theme-color" content="#0b1220">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,7 +22,7 @@
 
     <div class="brand">
       <img src="./assets/smart-ai-logo.png" alt="Smart Assistant AI logo" class="brand-logo">
-      <div><h1>Smart Assistant AI</h1><p>Web Edition • v2.2</p></div>
+      <div><h1>Smart Assistant AI</h1><p>Web + EES Edition • v3.0.0</p></div>
     </div>
 
     <section class="profile-card">
@@ -127,6 +127,10 @@
             <input id="localAiModeRadio" type="radio" name="assistantMode" value="local-ai">
             <span class="assistant-mode-content"><strong>Local AI</strong><small>Runs an AI model privately inside this browser. Load the model before use.</small><span id="localAiAvailability" class="mode-availability">Model not loaded</span></span>
           </label>
+          <label class="assistant-mode-card">
+            <input id="eesModeRadio" type="radio" name="assistantMode" value="ees-connected">
+            <span class="assistant-mode-content"><strong>EES Connected</strong><small>Keeps built-in tools while adding ees_data_platform queries and synchronized memory.</small><span id="eesAvailability" class="mode-availability">Checking data platform…</span></span>
+          </label>
           <label class="assistant-mode-card disabled-mode">
             <input id="cloudAiModeRadio" type="radio" name="assistantMode" value="cloud-ai" disabled>
             <span class="assistant-mode-content"><strong>Cloud AI</strong><small>Secure hosted AI requires a backend.</small><span class="mode-availability unavailable">Coming later</span></span>
@@ -137,6 +141,7 @@
           <button id="unloadAiModelButton" class="secondary-button" type="button" disabled>Unload Model</button>
         </div>
         <div id="aiModelStatus" class="ai-model-status" aria-live="polite">Built-in Tools are active.</div>
+        <div id="eesConnectionDetail" class="ai-model-status ees-connection-detail" aria-live="polite">EES connection is optional; standalone features remain available.</div>
         <div id="aiProgressContainer" class="ai-progress-container" hidden>
           <div class="ai-progress-track"><div id="aiProgressBar" class="ai-progress-bar" style="width:0%"></div></div>
           <span id="aiProgressText">Preparing model…</span>
@@ -189,10 +194,10 @@
     <div class="settings-content">
       <section class="about-intro">
         <img src="./assets/smart-ai-logo.png" alt="Smart Assistant AI logo" class="about-logo">
-        <div><h3>Web Edition v2.2</h3><p>A browser-based assistant with local tools, optional WebLLM, voice, PWA support, file analysis, charts, rich response cards, and private analytics.</p></div>
+        <div><h3>Web + EES Edition v3.0.0</h3><p>A browser-based assistant with local tools, optional WebLLM, voice, PWA support, file analysis, charts, rich response cards, and private analytics.</p></div>
       </section>
       <section class="edition-grid">
-        <article class="edition-card"><span class="web-badge">Web Edition</span><h3>Runs in the browser</h3><ul><li>Persistent profile and chat sessions</li><li>Weather, dictionary, and Wikipedia cards</li><li>Speech input and output</li><li>CSV/JSON analysis and charts</li><li>Optional Local AI</li><li>Installable PWA</li></ul></article>
+        <article class="edition-card"><span class="web-badge">Web Edition</span><h3>Runs in the browser</h3><ul><li>Persistent profile and chat sessions</li><li>Weather, dictionary, and Wikipedia cards</li><li>Speech input and output</li><li>CSV/JSON analysis and charts</li><li>Optional Local AI</li><li>Optional EES Universe intelligence + database memory</li><li>Installable PWA</li></ul></article>
         <article class="edition-card"><span class="desktop-badge">Desktop Edition</span><h3>Native macOS tools</h3><ul><li>CPU, RAM, and battery monitoring</li><li>Local file search</li><li>Native application launcher</li><li>Persistent JSON memory</li><li>Packaged macOS application</li></ul></article>
       </section>
       <section class="about-actions">
@@ -253,6 +258,7 @@
   </section>
 </div>
 
-<script type="module" src="./script.js"></script>
+<script src="./ees-config.js?v=3.0.0"></script>
+<script type="module" src="./script.js?v=3.0.0"></script>
 </body>
 </html>

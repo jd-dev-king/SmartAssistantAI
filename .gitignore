@@ -28,3 +28,22 @@ profile.json
 # User memory data
 memory/profile.json
 memory/history.json
+# Local environment / secrets
+.env
+backend/.env
+
+# Local development
+.vscode/
+.idea/
+.venv/
+venv/
+.env
+backend/.env
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+**/.DS_Store

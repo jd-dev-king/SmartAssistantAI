@@ -14,6 +14,7 @@ from voice.speech import speak
 from voice.listen import listen
 from utilities.task_manager import run_in_background
 from config import APP_NAME, VERSION
+from ees.client import health as ees_health
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -107,6 +108,20 @@ class ChatWindow(ctk.CTk):
             pady=10
         )
 
+        self.ees_status_label = ctk.CTkLabel(
+            self.sidebar,
+            text="EES: Checking...",
+            font=("Arial", 12)
+        )
+
+        self.ees_status_label.pack(
+            pady=5
+        )
+
+        run_in_background(
+            ees_health,
+            self.update_ees_status
+        )
 
         self.update_profile_display()
 
@@ -238,6 +253,22 @@ class ChatWindow(ctk.CTk):
             padx=5
         )
 
+
+
+    def update_ees_status(self, status):
+
+        def apply_status():
+            if status:
+                database = status.get("database", "ees_data_platform")
+                self.ees_status_label.configure(
+                    text=f"EES: Connected\n{database}"
+                )
+            else:
+                self.ees_status_label.configure(
+                    text="EES: Offline\nStandalone Ready"
+                )
+
+        self.after(0, apply_status)
 
 
     # -----------------------------

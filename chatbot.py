@@ -8,6 +8,8 @@ from system.monitor import get_system_status
 from calculator.math_engine import calculate
 from utilities.file_search import search_files
 from utilities.app_launcher import open_app
+from ees.client import ask as ask_ees, health as ees_health, is_ees_question
+
 from memory.memory import (
     load_profile,
     save_profile,
@@ -38,10 +40,6 @@ def get_response(message):
         name = name.title()
 
         profile["name"] = name
-
-        profile["name"] = name
-
-        save_profile(profile)
 
         save_profile(profile)
 
@@ -353,6 +351,39 @@ def get_response(message):
 
         return "Chat history cleared."
 
+
+
+    # =========================
+    # EES UNIVERSE (OPTIONAL)
+    # =========================
+
+    elif message in ["ees status", "ees connection", "data platform status"]:
+
+        status = ees_health()
+
+        if status:
+            return (
+                f"EES Connected: {status.get('database', 'ees_data_platform')} "
+                f"via Smart Assistant AI API v{status.get('version', '3.0.0')}."
+            )
+
+        return (
+            "EES Data Platform is offline. Standalone Smart Assistant AI "
+            "features are still available."
+        )
+
+
+    elif is_ees_question(original):
+
+        response = ask_ees(original)
+
+        if response:
+            return response
+
+        return (
+            "I could not reach the EES intelligence service. "
+            "Standalone tools are still available."
+        )
 
 
     # =========================

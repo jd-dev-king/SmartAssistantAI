@@ -41,6 +41,34 @@ PROFILE_PATH = os.path.join(
 
 
 
+def _ees_client():
+    try:
+        from ees import client
+        return client
+    except Exception:
+        return None
+
+
+def _merge_ees_profile(profile):
+    client = _ees_client()
+    if not client:
+        return profile
+    remote = client.fetch_profile()
+    if not remote:
+        return profile
+    mapping = {"name":"name", "favoriteColor":"favorite_color", "job":"job"}
+    changed = False
+    for remote_key, local_key in mapping.items():
+        value = remote.get(remote_key)
+        if value and not profile.get(local_key):
+            profile[local_key] = value
+            changed = True
+    if changed:
+        with open(PROFILE_PATH, "w") as file:
+            json.dump(profile, file, indent=4)
+    return profile
+
+
 # -------------------------
 # CHAT HISTORY
 # -------------------------
@@ -159,7 +187,7 @@ def load_profile():
             if data == "":
                 return {}
 
-            return data
+            return _merge_ees_profile(data)
 
 
     except (json.JSONDecodeError, OSError):
@@ -183,6 +211,10 @@ def save_profile(profile):
             file,
             indent=4
         )
+
+    client = _ees_client()
+    if client:
+        client.sync_profile(profile)
 
 
 
