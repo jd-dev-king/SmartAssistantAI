@@ -2,23 +2,23 @@
 
 ## Standalone AI Assistant + EES Enterprise Intelligence Interface
 
-**Version 2.0.0**
+**Version 3.0.0**
 
 Smart Assistant AI is a multi-interface intelligent assistant combining conversational interaction, persistent memory, voice capabilities, utilities, web functionality, and enterprise data access.
 
-Version **2.0.0** expands the original standalone Smart Assistant into an intelligence interface for the **Enterprise Execution Suite (EES)** while preserving its independent desktop and web capabilities.
+Version **3.0.0** expands the original standalone Smart Assistant into an intelligence interface for the **Enterprise Execution Suite (EES)** while preserving its independent desktop and web capabilities.
 
 Within the EES architecture, Smart Assistant AI serves as an intelligent interaction layer capable of connecting users with information produced by the broader EES ecosystem and the **EES Universal Data Moon**.
 
 ---
 
-## Version 2.0.0
+## Version 3.0.0
 
-Smart Assistant AI v2.0.0 represents the transition from a standalone assistant into a dual-purpose platform:
+Smart Assistant AI v3.0.0 represents the transition from a standalone assistant into a dual-purpose platform:
 
 ```text
                     SMART ASSISTANT AI
-                           v2.0.0
+                           v3.0.0
                               │
              ┌────────────────┴────────────────┐
              │                                 │
@@ -64,7 +64,7 @@ Memory functionality supports information such as:
 - Assistant context
 - Stored profile information
 
-Version 2 extends this architecture to support interaction with EES-related context while maintaining separation between assistant memory and authoritative enterprise data.
+Version 3 extends this architecture to support interaction with EES-related context while maintaining separation between assistant memory and authoritative enterprise data.
 
 ---
 
@@ -126,7 +126,7 @@ SmartAssistantAI/
 └── api/
 ```
 
-The desktop application remains an important component of Smart Assistant AI v2.0.0.
+The desktop application remains an important component of Smart Assistant AI v3.0.0.
 
 ---
 
@@ -147,7 +147,7 @@ docs/
 
 The web interface supports a lightweight portfolio demonstration and Progressive Web App experience.
 
-Version 2 introduces EES configuration support through:
+Version 3 introduces EES configuration support through:
 
 ```text
 docs/ees-config.js
@@ -159,7 +159,7 @@ This provides a bridge between the browser interface and the EES-connected archi
 
 # EES Integration
 
-Version 2 introduces the EES integration layer:
+Version 3 introduces the EES integration layer:
 
 ```text
 ees/
@@ -270,7 +270,7 @@ CONVERSATIONAL ACCESS
 
 # Connected EES Ecosystem
 
-Smart Assistant AI v2 is designed to participate in the expanding EES ecosystem, including systems such as:
+Smart Assistant AI v3 is designed to participate in the expanding EES ecosystem, including systems such as:
 
 - EES Pharma Process Twin
 - EES Manufacturing Intelligence
@@ -289,7 +289,7 @@ The Universal Data Moon provides the shared architecture that allows these indep
 
 # Backend Architecture
 
-The v2 backend provides the foundation for EES-connected assistant functionality.
+The v3 backend provides the foundation for EES-connected assistant functionality.
 
 ```text
 Browser / Desktop
@@ -453,7 +453,7 @@ Production secrets should be managed through the appropriate deployment platform
 
 # Version History
 
-## v2.0.0 — Smart Assistant AI + EES Integration
+## v3.0.0 — Smart Assistant AI + EES Integration
 
 Major architecture release.
 
@@ -470,7 +470,7 @@ Major architecture release.
 - Adds shared EES data-platform connectivity
 - Establishes Smart Assistant AI as the conversational intelligence interface for EES
 
-## v1.x — Smart Assistant AI
+## v1 and v2 — Smart Assistant AI
 
 Original standalone assistant implementation featuring:
 
@@ -541,7 +541,7 @@ This project is provided under the MIT License unless otherwise specified in the
 
 ---
 
-## Smart Assistant AI v2.0.0
+## Smart Assistant AI v3.0.0
 
 **Standalone intelligence. Enterprise connectivity. Conversational access to the EES Universe.**
 
