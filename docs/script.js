@@ -126,13 +126,39 @@ async function processMessage(input){
  if(m.startsWith("calculate ")||m.startsWith("solve ")){trackAnalytics("tools","calculator");const cmd=m.startsWith("calculate ")?"calculate":"solve",expr=original.substring(cmd.length).trim();try{return`${expr} = ${safelyCalculate(expr)}`}catch{return"I could not calculate that expression."}}
  if(m.includes("percent of")||m.includes("% of")){trackAnalytics("tools","percentage");const x=m.match(/(-?\d+(?:\.\d+)?)\s*(?:percent|%)\s+of\s+(-?\d+(?:\.\d+)?)/);return x?`${x[1]}% of ${x[2]} = ${(Number(x[1])/100)*Number(x[2])}`:"Try: 15 percent of 300."}
  if(m.startsWith("define ")){trackAnalytics("tools","dictionary");return await getDefinition(original.substring(7).trim())}
- if(m.startsWith("wiki ")||m.startsWith("tell me about ")||m.startsWith("who is ")){trackAnalytics("tools","wikipedia");const topic=m.startsWith("wiki ")?original.substring(5):m.startsWith("tell me about ")?original.substring(14):original.substring(7);return await getWikipediaSummary(topic.trim())}
+ 
+ // Route EES-domain questions to the EES intelligence backend first.
+if(
+    settings.assistantMode === "ees-connected" &&
+    looksLikeEesQuestion(original)
+){
+    return await askEes(original);
+}
+ 
+ // Explicit "wiki" always means Wikipedia.
+// Generic "tell me about" / "who is" should not steal EES questions.
+if(m.startsWith("wiki ")){
+    trackAnalytics("tools","wikipedia");
+    return await getWikipediaSummary(original.substring(5).trim());
+}
+
+if(
+    (m.startsWith("tell me about ") || m.startsWith("who is ")) &&
+    !(settings.assistantMode === "ees-connected" && looksLikeEesQuestion(original))
+){
+    trackAnalytics("tools","wikipedia");
+
+    const topic = m.startsWith("tell me about ")
+        ? original.substring(14)
+        : original.substring(7);
+
+    return await getWikipediaSummary(topic.trim());
+}
  if(m.includes("weather")){trackAnalytics("tools","weather");const loc=extractWeatherLocation(original);return loc?await getWeather(loc):"Tell me the city and state, such as Philadelphia, PA."}
  if(m.includes("joke")||m.includes("make me laugh")){trackAnalytics("tools","jokes");const j=jokes[Math.floor(Math.random()*jokes.length)];return`${j[0]}\n${j[1]}`}
  if(m.includes("what time")||m==="time"){trackAnalytics("tools","dateTime");return`The current time is ${new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}.`}
  if(m.includes("what is today's date")||m.includes("what is the date")||m==="date"){trackAnalytics("tools","dateTime");return`Today is ${new Date().toLocaleDateString([],{weekday:"long",year:"numeric",month:"long",day:"numeric"})}.`}
  if(m.includes("what can you do"))return"I can remember your profile, calculate, define words, search Wikipedia, check weather, accept voice input, speak responses, manage conversations, analyze CSV/JSON files, generate charts, provide local analytics, optionally use Local AI, and connect to the EES Universe data platform when available.";
- if(settings.assistantMode==="ees-connected"&&(looksLikeEesQuestion(original)||eesOnline)){return await askEes(original)}
  if(settings.assistantMode==="local-ai"&&aiModelReady&&aiEngine){trackAnalytics("tools","localAi");return await getAiResponse(original)}
  return"I’m still learning that command. Try a built-in tool or load Local AI in Settings for open-ended questions.";
 }
